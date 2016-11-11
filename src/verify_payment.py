@@ -58,6 +58,7 @@ class Payment_Graph():
                     return True
         return False
         
+    #expand a set by adding the first-degree connections of each member in the set
     def expand_id_set(self,id_set):
         id_keys = list(id_set)
         for id_key in id_keys:        
@@ -74,6 +75,9 @@ class Payment_Graph():
                 return True
         return False
 
+#get ids from a line of input
+#for this task you only need the id's
+#for live use you would definitely want to check that all of the data is in the expected format
 def get_ids_from_line(line):
     line_data = line.strip().split(",")
 
@@ -96,6 +100,7 @@ def get_ids_from_line(line):
 
     return line_data[1],line_data[2]
 
+#updates the graph for a file of transcations
 def process_batch (filname,connections):
     batch_fh = open(filname)
     heading = batch_fh.readline()
@@ -104,6 +109,8 @@ def process_batch (filname,connections):
         if ids is not None:
             connections.add_connection(ids[0],ids[1])
 
+#determines whether a transaction is verified, and updates the graph
+#writies "unverified" or "trusted" to the given output file
 def process_streaming(input_filename, output_filename, connections, degree):
     input_fh = open(input_filename)
     output_fh = open(output_filename, 'w')
